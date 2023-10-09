@@ -6,8 +6,9 @@ public class Individual {
 
     public Individual(char[] chromosome) {
         this.chromosome = chromosome;
-        this.fitness =fitCheck() ;
+        this.fitness = fitCheck();
     }
+
     public double fitCheck() {
         String TARGET = "HELLO WORLD";
         char[] splitTarget = {'H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'};
@@ -15,11 +16,11 @@ public class Individual {
             return 1;
         }
         double fit = 0;
-        if (this.chromosome[5] ==' ') {
+        if (this.chromosome[5] == ' ') {
             fit += 0.2;
         }
         for (int i = 0; i < TARGET.length(); i++) {
-            if (splitTarget[i] == this.chromosome[i] ) {
+            if (splitTarget[i] == this.chromosome[i]) {
                 fit += 0.08;
             }
         }
@@ -31,29 +32,18 @@ public class Individual {
         return chromosome;
     }
 
-    public void setChromosome(char[] chromosome) {
-        this.chromosome = chromosome;
-    }
-
     public double getFitness() {
         return fitness;
     }
 
-    public void setFitness(double fitness) {
-        this.fitness = fitness;
-    }
-
     public String genoToPhenotype() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(chromosome);
-        return builder.toString();
+        return String.valueOf(chromosome);
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public Individual clone() {
         char[] chromClone = new char[chromosome.length];
-        for (int i = 0; i < chromClone.length; i++) {
-            chromClone[i] = chromosome[i];
-        }
+        System.arraycopy(chromosome, 0, chromClone, 0, chromClone.length);
         return new Individual(chromClone);
     }
 

@@ -4,7 +4,6 @@ public class Testing {
     static final String TARGET = "HELLO WORLD";
     static char[] alphabet = new char[27];
     public static void main(String[] args) {
-        int popSize =100;
         testForAllowed(250);
         testingForSize();
         testingForMutation(0,7);
@@ -30,7 +29,7 @@ public class Testing {
                 population[p] = new Individual(tempChromosome);
             }
             HeapSort.sort(population);
-            System.out.println("for the population on "+popSize+" with no crosover, only mutations it takes "+elitistNoCross(population,2)+" generations");
+            System.out.println("for the population on "+popSize+" with no crossover, only mutations it takes "+elitistNoCross(population,2)+" generations");
         }
     }
     public static int elitistNoCross(Individual[] population, int howManyToEvolve) {
@@ -43,7 +42,7 @@ public class Testing {
 
             Individual[] nextIteration = new Individual[popSize];
             for (int index = 0; index < popSize; index++) {
-                nextIteration[index] = EvolveNoCross(population[index % howManyToEvolve], population[(index % howManyToEvolve) + 1],2);
+                nextIteration[index] = EvolveNoCross(population[index % howManyToEvolve], 2);
             }
             population = nextIteration.clone();
             HeapSort.sort(population);
@@ -52,7 +51,7 @@ public class Testing {
         }
         return -1;
     }
-    public static Individual EvolveNoCross(Individual one, Individual two, int mutationRate) {
+    public static Individual EvolveNoCross(Individual one, int mutationRate) {
         char[] chromosome = new char[TARGET.length()];
         for (int i = 0; i < TARGET.length(); i++) {
             chromosome[i] = one.getChromosome()[i];
@@ -66,8 +65,7 @@ public class Testing {
             chromosome[random_int] = random_char;
         }
 
-        Individual re = new Individual(chromosome);
-        return re;
+        return new Individual(chromosome);
     }
     public static void testingForMutation(int start, int finish){
         int popSize=100;
@@ -101,7 +99,7 @@ public class Testing {
             }
             alphabet[26] = ' ';
             Random generator = new Random(System.currentTimeMillis());
-            Individual[] population = new Individual[popSize];
+            @SuppressWarnings("MismatchedReadAndWriteOfArray") Individual[] population = new Individual[popSize];
             // we initialize the population with random characters
             for (int a = 0; a < popSize; a++) {
                 char[] tempChromosome = new char[TARGET.length()];
@@ -117,6 +115,7 @@ public class Testing {
 
     }
 
+    @SuppressWarnings("RedundantCast")
     public static void testForAllowed(int times) {
         int popSize = 100;
         for (char c = 'A'; c <= 'Z'; c++) {
@@ -144,7 +143,7 @@ public class Testing {
                 }
                 average += tries;
             }
-            average = (int) (average /= times);
+            average = (int) (average / times);
             if (worked) {
                 System.out.println("for the top " + i + " individuals being allowed to evolve it took on average " + average + " generations");
             } else {
@@ -173,13 +172,11 @@ public class Testing {
         //System.out.println(("Testing for the popSize of ")+popSize+(", what is the best amount of individuals (between 1 and 25 ) that we should allow to evolve ( for the elitist selection ):"));
         for (int i = 1; i <= 25; i++) {
             boolean worked = true;
-            int average = 0;
             for (int a = 0; a < times; a++) {
                 int tries = elitist(population, i);
                 if (tries == -1) {
                     worked = false;
                 }
-                average += tries;
                 if (tries < best) {
                     best = tries;
                 }
@@ -187,13 +184,12 @@ public class Testing {
                     worst=tries;
                 }
             }
-            average = (int) (average /= times);
             if (!worked) {
                 System.out.println("for the top " + i + " individuals being allowed to evolve it sometimes didnt work, it is not worth trying ");
             }
         }
-        System.out.println("for the popsize of " + popSize + " the best it can do is " + best + " generations");
-        System.out.println("for the popsize of " + popSize + " the worst it can do is " + worst + " generations");
+        System.out.println("for the pop-size of " + popSize + " the best it can do is " + best + " generations");
+        System.out.println("for the pop-size of " + popSize + " the worst it can do is " + worst + " generations");
     }
 
     public static int elitist(Individual[] population, int howManyToEvolve){
@@ -236,12 +232,7 @@ public class Testing {
             chromosome[random_int] = random_char;
         }
 
-        Individual re = new Individual(chromosome);
-        return re;
-    }
-
-    public static Individual Evolve(Individual one, Individual two) {
-        return Evolve(one, two, 2);
+        return new Individual(chromosome);
     }
 
 }

@@ -1,16 +1,13 @@
-import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
-import java.util.jar.JarEntry;
 
 public class UserPlaying {
-    private int mutations;
-    private int popSize;
-    private int allowedToEvolve;
+    private final int mutations;
+    private final int popSize;
+    private final int allowedToEvolve;
     static final String TARGET = "HELLO WORLD";
     private static double[] average = new double[0];
-    static final char[] splitTarget = {'H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'};
     static char[] alphabet = new char[27];
     public UserPlaying(int mutations, int popSize, int allowedToEvolve) {
         this.mutations = mutations;
@@ -19,10 +16,10 @@ public class UserPlaying {
     }
     public void run (){
         elitist(allowedToEvolve,mutations,popSize);
-        String avr="";
+        StringBuilder avr= new StringBuilder();
         for (int i=0; i<average.length; i++){
             String line=("average for generation "+(i+1) + " is "+ round(average[i],3 )+"\n");
-            avr+=line;
+            avr.append(line);
         }
         JFrame frame = new JFrame();
         frame.setLayout(new GridBagLayout());
@@ -30,7 +27,7 @@ public class UserPlaying {
         frame.setTitle("The genetic algorithm");
         frame.setSize(1920, 1080);
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        //seting panel
+        //setting panel
         JPanel settingsPanel = new JPanel();
         JLabel settingsLabel = new JLabel("The setting were: population size of " + popSize + ", "+ mutations+ " mutations per evolution, and  " + allowedToEvolve + " individuals allowed to evolve.");
         settingsPanel.add(settingsLabel);
@@ -45,18 +42,18 @@ public class UserPlaying {
         //tries
         String tries =("It took "+ average.length+ " generations!");
         JLabel triesLabel = new JLabel(tries);
-        JPanel triespanel= new JPanel();
-        triespanel.add(triesLabel);
+        JPanel triesPanel = new JPanel();
+        triesPanel.add(triesLabel);
         gridBagConstraints.gridy=2;
-        frame.add(triespanel, gridBagConstraints);
-        //awverages
-        double allaverages=0;
+        frame.add(triesPanel, gridBagConstraints);
+        //averages
+        double allAverages=0;
         for (double number : average){
-            allaverages+=number;
+            allAverages+=number;
         }
-        allaverages/=average.length;
+        allAverages/=average.length;
         JPanel averagesOne= new JPanel();
-        JLabel averagesLabel = new JLabel("The average fitness of individuals throughout the whole proces was: "+round(allaverages,4));
+        JLabel averagesLabel = new JLabel("The average fitness of individuals throughout the whole proces was: "+round(allAverages,4));
         averagesOne.add(averagesLabel);
         gridBagConstraints.gridy=3;
         frame.add(averagesOne,gridBagConstraints);
@@ -92,7 +89,7 @@ public class UserPlaying {
             population[i] = new Individual(tempChromosome);
         }
         HeapSort.sort(population);
-        //for the average fitnes
+        //for the average fitness
         //starting the GA
         for (int safety = 0; safety < 30000; safety++) {
             if (population[0].getFitness() == 1) {
@@ -113,9 +110,7 @@ public class UserPlaying {
                 tmp[average.length]+=i.getFitness();
             }
             tmp[average.length]/=popSize;
-            for(int i=0; i< average.length; i++){
-                tmp[i]=average[i];
-            }
+            System.arraycopy(average, 0, tmp, 0, average.length);
             average=tmp.clone();
         }
     }
@@ -137,13 +132,9 @@ public class UserPlaying {
             chromosome[random_int] = random_char;
         }
 
-        Individual re = new Individual(chromosome);
-        return re;
+        return new Individual(chromosome);
     }
 
-    public static Individual Evolve(Individual one, Individual two) {
-        return Evolve(one, two, 2);
-    }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 

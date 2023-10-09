@@ -20,59 +20,47 @@
 /**
  * A heap sort demonstration algorithm
  * SortAlgorithm.java, Thu Oct 27 10:32:35 1994
- *
+ * <p>
  * Modified by Steven de Jong for Genetic Algorithms.
- * 
+ * <p>
  * Modified by Jo Stevens for practical session.
  *
- *
  * @author Jason Harrison@cs.ubc.ca
- * @version     1.0, 23 Jun 1995
- *
  * @author Steven de Jong
- * @version     1.1, 08 Oct 2004
- * 
  * @author Jo Stevens
  * @version 1.2, 14 Nov 2008
- * 
  */
-public class HeapSort 
-{
-    
-    public static void sort(Individual i[])
-    {
-        int N = i.length;
-        
-        for (int k = N/2; k > 0; k--) 
-        downheap(i, k, N);
+public class HeapSort {
 
-        do 
-        {
+    public static void sort(Individual[] i) {
+        int N = i.length;
+
+        for (int k = N / 2; k > 0; k--)
+            downHeap(i, k, N);
+
+        do {
             Individual T = i[0];
             i[0] = i[N - 1];
             i[N - 1] = T;
-            
+
             N = N - 1;
-            downheap(i, 1, N);
-        } 
+            downHeap(i, 1, N);
+        }
         while (N > 1);
     }
-    
-    private static void downheap(Individual i[], int k, int N)
-    {
+
+    private static void downHeap(Individual[] i, int k, int N) {
         Individual T = i[k - 1];
-        
-        while (k <= N/2) 
-        {
+
+        while (k <= N / 2) {
             int j = k + k;
-            if ((j < N) && (i[j - 1].getFitness() > i[j].getFitness())) 
-            j++;
+            if ((j < N) && (i[j - 1].getFitness() > i[j].getFitness()))
+                j++;
 
-            if (T.getFitness() <= i[j - 1].getFitness()) 
-            break;
+            if (T.getFitness() <= i[j - 1].getFitness())
+                break;
 
-            else 
-            {
+            else {
                 i[k - 1] = i[j - 1];
                 k = j;
             }

@@ -1,7 +1,4 @@
-import javax.sound.midi.Soundbank;
-import java.util.Formattable;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Some very basic stuff to get you started. It shows basically how each
@@ -15,7 +12,6 @@ import java.util.Scanner;
 public class Practical2 {
 
     static final String TARGET = "HELLO WORLD";
-    static final char[] splitTarget = {'H', 'E', 'L', 'L', 'O', ' ', 'W', 'O', 'R', 'L', 'D'};
     static char[] alphabet = new char[27];
     private static final int popSize = 100;
 
@@ -40,14 +36,14 @@ public class Practical2 {
         int howManyToEvolve = 2;
         elitist(population, howManyToEvolve);
     }
+
     public static void elitist(Individual[] population, int howManyToEvolve) {
         int popSize = population.length;
         for (int safety = 0; safety < 30000; safety++) {
             if (population[0].getFitness() == 1) {
                 System.out.println("this is the: " + safety + " iteration, the best is our target: ");
                 System.out.println(population[0].genoToPhenotype());
-                System.out.println("the rest of the population with their fitnes values:");
-                boolean first = true;
+                System.out.println("the rest of the population with their fitness values:");
                 System.out.println("done");
                 break;
             }
@@ -60,6 +56,7 @@ public class Practical2 {
             HeapSort.sort(population);
         }
     }
+
     public static Individual Evolve(Individual one, Individual two, int mutationRate) {
         char[] chromosome = new char[TARGET.length()];
         for (int i = 0; i < 6; i++) {
@@ -77,9 +74,9 @@ public class Practical2 {
             chromosome[random_int] = random_char;
         }
 
-        Individual re = new Individual(chromosome);
-        return re;
+        return new Individual(chromosome);
     }
+
     public static Individual Evolve(Individual one, Individual two) {
         return Evolve(one, two, 2);
     }
