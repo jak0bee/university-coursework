@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GeneticAlgorythm/GeneticAlgorythm.iml" filepath="$PROJECT_DIR$/GeneticAlgorythm/GeneticAlgorythm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JunitTestAssignment/JunitTestAssignment.iml" filepath="$PROJECT_DIR$/JunitTestAssignment/JunitTestAssignment.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/university-github.iml" filepath="$PROJECT_DIR$/.idea/university-github.iml" />
     </modules>
   </component>
